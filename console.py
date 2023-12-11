@@ -8,8 +8,8 @@ import re
 import shlex
 import json
 
-from models.base.model import BaseModel
-from models.engine.file_storage import file_storage
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from models import storage
 from models.amenity import Amenity
 from models.city import City
@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
     """
     command interpreter for the AirBnB program entry point
     """
-    entry = "(hbnb)"
+    prompt = "(hbnb)"
     main_classes = {"BaseModel",
                "User",
                "State",
@@ -33,12 +33,12 @@ class HBNBCommand(cmd.Cmd):
     
     def do_quit(self, arg):
         """ Exit the console"""
-        return true
+        return True
     
     def do_EOF(Self, arg):
         """ implements the End-Of-File condtion """
         print()
-        return true
+        return True
     
     def emptyline(self):
         """ implementred to do nothing"""
@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if not arg or len(arg) == 0:
             print("** class name missing **")
-        if arg not in HBNBCommand.classes:
+        if arg not in HBNBCommand.main_classes:
             print("** class doesn't exist **")
             return
         item = eval(arg)()
@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         arg = arg.split()
         if not arg or len(arg) == 0:
             print("** class name missing **")
-        if arg[0] not in HBNBCommand.classes:
+        if arg[0] not in HBNBCommand.main_classes:
             print("** class doesn't exist **")
             return
         if len(arg) < 2:
@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
         arg = arg.split()
         if not arg or len(arg) == 0:
             print("** class name missing **")
-        if arg[0] not in HBNBCommand.classes:
+        if arg[0] not in HBNBCommand.main_classes:
             print("** class doesn't exist **")
             return
         if len(arg) < 2:
@@ -105,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
         arg = arg.split()
         if not arg or len(arg) == 0:
             print("** class name missing **")
-        if arg[0] not in HBNBCommand.classes:
+        if arg[0] not in HBNBCommand.main_classes:
             print("** class doesn't exist **")
             return
         str_list = []
@@ -113,9 +113,9 @@ class HBNBCommand(cmd.Cmd):
             str_list.append(item.__str__())
         print(list_of_instances)
 
-     def do_count(self, args):
+    def do_count(self, args):
         """
-        count number of objects from classes.
+        count number of objects from main_classes.
         args:
             args (str): a string containing class name
         """
@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
         if not args or len(args) != 1:
             print("** class name missing **")
             return
-        if args[0] not in HBNBCommand.classes:
+        if args[0] not in HBNBCommand.main_classes:
             print("** class doesn't exist **")
             return
         instances = 0
@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
         if not args or len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in HBNBCommand.classes:
+        if args[0] not in HBNBCommand.main_classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
